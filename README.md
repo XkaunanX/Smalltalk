@@ -139,6 +139,52 @@ Imaginemos un escenario en un zoologico donde modelamos diferentes tipos de anim
   - Puede `amamantar` (definido en `Mamifero`).
   - Puede `respirar` y `comer` (definidos en `Animal`).
 
+```smalltalk
+"Clase base Animal"
+Object subclass: Animal [
+    Animal class >> respirar [
+        "Comportamiento comun a todos los animales"
+        "Logica para respirar"
+    ]
+
+    Animal class >> comer [
+        "Comportamiento comun a todos los animales"
+        "Logica para comer"
+    ]
+    
+    | edad |
+    Animal class >> edad [
+        ^edad
+    ]
+]
+
+"Clase derivada Mamifero"
+Animal subclass: Mamifero [
+    Mamifero class >> amamantar [
+        "Comportamiento especifico de mamiferos"
+        "Logica para amamantar"
+    ]
+]
+
+"Clase derivada Perro"
+Mamifero subclass: Perro [
+    Perro class >> ladrar [
+        "Comportamiento especifico de perros"
+        "Logica para ladrar"
+    ]
+]
+
+"Creacion de un objeto Perro"
+| perro |
+perro := Perro new.
+
+"Acceso a los metodos heredados"
+perro respirar.  "Metodo heredado de Animal"
+perro comer.     "Metodo heredado de Animal"
+perro amamantar. "Metodo heredado de Mamifero"
+perro ladrar.    "Metodo definido en Perro"
+```
+
 ### Interpretacion de que todo sea objeto
 Todo en Smalltalk es un objeto, lo que significa que incluso las clases mismas son objetos. Esto permite que:
 - Los bloques de codigo sean tratados como objetos, lo que habilita estructuras y comportamiento dinamicos.
@@ -198,16 +244,279 @@ El árbol de herencia en Smalltalk refleja las relaciones jerárquicas entre las
 - **Metodos de clase**: Definen el comportamiento asociado con la clase como un todo.
 - **Metodos de instancia**: Definen el comportamiento asociado con objetos especificos creados a partir de una clase.
 
+```smalltalk
+"Clase Persona"
+Object subclass: Persona [
+    
+    | nombre edad |
+    
+    "Metodo de clase (constructor)"
+    Persona class >> nuevaPersonaConNombre: unNombre edad: unaEdad [
+        ^self new init: unNombre edad: unaEdad
+    ]
+    
+    "Metodo de instancia (inicializador)"
+    Persona class >> init: unNombre edad: unaEdad [
+        nombre := unNombre.
+        edad := unaEdad.
+    ]
+    
+    "Metodo de instancia"
+    Persona class >> presentar [
+        ^'Hola, mi nombre es ', nombre, ' y tengo ', edad printString, ' años.'
+    ]
+]
+
+"Creacion de una persona"
+| persona |
+persona := Persona nuevaPersonaConNombre: 'Juan' edad: 30.
+
+"Acceder a un metodo de instancia"
+persona presentar.  "Devuelve: 'Hola, mi nombre es Juan y tengo 30 años.'"
+```
+
 ### Cambio de clases en tiempo de ejecucion
 En Smalltalk, las clases pueden ser modificadas dinamicamente en tiempo de ejecucion, lo que facilita la adaptacion y experimentacion sin necesidad de reiniciar el sistema.
+
+```smalltalk
+"Definir una clase basica Persona"
+Object subclass: Persona [
+    | nombre edad |
+    
+    "Metodo de inicializacion"
+    Persona class >> init: unNombre edad: unaEdad [
+        nombre := unNombre.
+        edad := unaEdad.
+    ]
+    
+    "Metodo para presentar a la persona"
+    Persona class >> presentar [
+        ^'Hola, mi nombre es ', nombre, ' y tengo ', edad printString, ' años.'
+    ]
+]
+
+"Crear una instancia de Persona"
+| persona |
+persona := Persona new init: 'Juan' edad: 30.
+persona presentar. "Devuelve: 'Hola, mi nombre es Juan y tengo 30 años.'"
+
+"Modificar la clase Persona en tiempo de ejecucion"
+Persona class >> cambiarNombre: nuevoNombre [
+    nombre := nuevoNombre.
+]
+
+"Modificar la instancia"
+persona cambiarNombre: 'Carlos'.
+persona presentar. "Devuelve: 'Hola, mi nombre es Carlos y tengo 30 años.'"
+```
 
 ### Archivos de clases y workspace
 - **Archivos de clases**: Contienen definiciones de clases, metodos y propiedades.
 - **Archivos de workspace**: Permiten escribir y probar codigo interactivamente en un entorno de desarrollo.
 
+Ejemplo de archivo de clase .cls:
+
+```smalltalk
+"Filed out from Dolphin Smalltalk 7"!
+
+Object subclass: #Biblioteca
+	instanceVariableNames: 'nombre coleccionLibros'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Biblioteca guid: (GUID fromString: '{A33FCDDA-09AA-4EEC-BE31-39B954C6914E}')!
+Biblioteca comment: ''!
+!Biblioteca categoriesForClass!Kernel-Objects! !
+!Biblioteca methodsFor!
+
+agregarLibro: unLibro
+coleccionLibros add:unLibro.!
+
+buscarLibro: unLibro
+coleccionLibros includes: unLibro.!
+
+cantidadLibros
+^coleccionLibros size.!
+
+eliminarLibro: unLibro
+coleccionLibros remove:unLibro.!
+
+esVacia
+^coleccionLibros isEmpty.!
+
+iniciar:unNombre
+nombre := unNombre.
+coleccionLibros := OrderedCollection new.!
+
+modNombre: unString
+nombre := unString.!
+
+recuperarLibro: unIndice
+^coleccionLibros at:unIndice.!
+
+verNombre
+^nombre.!
+
+verTodos
+^coleccionLibros.! !
+!Biblioteca categoriesFor: #agregarLibro:!public! !
+!Biblioteca categoriesFor: #buscarLibro:!public! !
+!Biblioteca categoriesFor: #cantidadLibros!public! !
+!Biblioteca categoriesFor: #eliminarLibro:!public! !
+!Biblioteca categoriesFor: #esVacia!public! !
+!Biblioteca categoriesFor: #iniciar:!public! !
+!Biblioteca categoriesFor: #modNombre:!public! !
+!Biblioteca categoriesFor: #recuperarLibro:!public! !
+!Biblioteca categoriesFor: #verNombre!public! !
+!Biblioteca categoriesFor: #verTodos!public! !
+
+!Biblioteca class methodsFor!
+
+crear: unNombre
+^self new iniciar:unNombre.! !
+!Biblioteca class categoriesFor: #crear:!public! !
+```
+Ejemplo de archivo workspace .st:
+
+```smalltalk
+| nombre_biblioteca ejecucion menu_principal menu_seleccion menu_estado biblioteca opcion isbn titulo autor editorial estado dni libro identificador hacer delAutor malos dic libros autores sinRepetidos clave |
+
+ejecucion := true.
+
+menu_principal := #('Cargar libro' 'Seleccionar libro' 'Listar todos' 'Listar autor' 'Eliminar malos' 'Libros de los autor').
+
+menu_seleccion := #('Imprimir' 'Modificar' 'Eliminar').
+
+menu_estado := #('Bueno' 'Malo').
+
+nombre_biblioteca := Prompter prompt: 'Nombre de la biblioteca'.
+
+biblioteca := Biblioteca crear: nombre_biblioteca.
+
+[ejecucion] whileTrue:
+[
+    opcion := ChoicePrompter choices: menu_principal.
+    
+    (opcion = 'Cargar libro') ifTrue: [
+        isbn := ((Random new next * 100) + 1000) ceiling.
+        titulo := Prompter prompt: 'Titulo'.
+        autor := Prompter prompt: 'Autor'.
+        editorial := Prompter prompt: 'Editorial'.
+        estado := ChoicePrompter choices: menu_estado.
+        dni := (Prompter prompt: 'Dni') asNumber.
+        libro := Libro crear: isbn titulo: titulo autor: autor editorial: editorial estado: estado dni: dni.
+        biblioteca agregarLibro: libro.
+        MessageBox notify: 'Libro Cargado'.
+    ].
+    
+    (opcion = 'Seleccionar libro') ifTrue: [
+        identificador := Prompter prompt: 'Ingrese el isbn del libro'.
+        libro := biblioteca verTodos detect: [:item | item verIsbn = identificador].
+        (libro isNil) ifTrue: [
+            MessageBox errorMsg: 'No encontrado'.
+        ] ifFalse:[
+            hacer := ChoicePrompter choices: menu_seleccion.
+            
+            (hacer = 'Imprimir') ifTrue: [
+                Transcript show: libro verIsbn displayString; cr.
+                Transcript show: libro verTitulo; cr.
+                Transcript show: libro verAutor; cr.
+                Transcript show: libro verEditorial; cr.
+                Transcript show: libro verEstado; cr.
+                Transcript show: libro verDni displayString; cr.
+            ].
+            
+            (hacer = 'Modificar') ifTrue: [
+                titulo := Prompter prompt: 'Nuevo Titulo' ifNil: [libro verTitulo].
+                autor := Prompter prompt: 'Nuevo Autor' ifNil: [libro verAutor].
+                editorial := Prompter prompt: 'Nueva Editorial' ifNil: [libro verEditorial].
+                estado := ChoicePrompter choices: menu_estado ifNil: [libro verEstado].
+                libro modificarTitulo: titulo autor: autor editorial: editorial estado: estado.
+                MessageBox notify: 'Libro Modificado'.
+            ].
+            
+            (hacer = 'Eliminar') ifTrue: [
+                biblioteca eliminarLibro: libro.
+                MessageBox notify: 'Libro Eliminado'.
+            ].
+        ].
+    ].
+    
+    (opcion = 'Listar todos') ifTrue: [
+        Transcript clear.
+        biblioteca verTodos do: [:item |
+            Transcript show: item verIsbn displayString; cr.
+            Transcript show: item verTitulo; cr.
+            Transcript show: item verAutor; cr.
+            Transcript show: item verEditorial; cr.
+            Transcript show: item verEstado; cr.
+            Transcript show: item verDni displayString; cr.
+        ].
+    ].
+    
+    (opcion = 'Listar autor') ifTrue: [
+        Transcript clear.
+        autor := Prompter prompt: 'Autor'.
+        delAutor := biblioteca verTodos select: [:item | item verAutor = autor].
+        delAutor do: [:item |
+            Transcript show: item verIsbn displayString; cr.
+            Transcript show: item verTitulo; cr.
+            Transcript show: item verAutor; cr.
+            Transcript show: item verEditorial; cr.
+            Transcript show: item verEstado; cr.
+            Transcript show: item verDni displayString; cr.
+        ].
+    ].
+    
+    (opcion = 'Eliminar Malos') ifTrue: [
+        Transcript clear.
+        malos := biblioteca verTodos reject: [:item | item verEstado = 'Bueno'].
+        malos do: [:item |
+            Transcript show: item verTitulo, ' Eliminado'; cr.
+            biblioteca eliminarLibro: item.
+        ].
+    ].
+    
+    (opcion = 'Libros de los autores') ifTrue: [
+        Transcript clear.
+        dic := Dictionary new.
+        libros := biblioteca verTodos.
+        autores := libros collect: [:item | item verAutor].
+        sinRepetidos := autores asSet.
+        sinRepetidos do: [:clave |
+            dic at: clave put: (autores occurrencesOf: clave).
+        ].
+        dic keysDo: [:clave |
+            Transcript show: clave , ': ', (dic at: clave) printString; cr.
+        ].
+    ].
+    
+    (opcion isNil) ifTrue: [
+        ejecucion := false.
+    ].
+].
+```
+
 ### Tipo de tipado
 Smalltalk utiliza tipado dinamico, donde los tipos de las variables se determinan en tiempo de ejecucion, permitiendo gran flexibilidad.
 
+```smalltalk
+"Ejemplo de tipado dinamico en Smalltalk"
+
+| variable |
+
+"Inicializamos la variable con un entero"
+variable := 10.
+Transcript show: 'El valor de variable es: ', variable printString; cr.
+
+"Reasignamos la variable con una cadena"
+variable := 'Hola Mundo'.
+Transcript show: 'El valor de variable es: ', variable printString; cr.
+
+"Reasignamos la variable con un objeto"
+variable := Object new.
+Transcript show: 'El valor de variable es un objeto: ', variable printString; cr.
+```
+
 ### Compilado o interpretado
 Smalltalk es un lenguaje interpretado. Utiliza una maquina virtual para ejecutar codigo en tiempo real, ofreciendo un entorno altamente interactivo.
-
