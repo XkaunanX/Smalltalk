@@ -75,32 +75,20 @@ Smalltalk ofrece una variedad de colecciones que permiten almacenar y manipular 
 ```plaintext
 Object
    |
-   +-- UndefinedObject
    |
    +-- Collection
-   |     |
-   |     +-- IndexedCollection
-   |     |     |
-   |     |     +-- FixedSizeCollection
-   |     |           +-- Array
-   |     |           +-- String
-   |     |
-   |     +-- OrderedCollection
-   |     |     +-- SortedCollection
-   |     |
-   |     +-- Bag
-   |     +-- Set
-   |           +-- Dictionary
-   |
-   +-- Magnitude
          |
-         +-- Character
-         +-- Number
+         +-- IndexedCollection
          |     |
-         |     +-- Float
-         |     +-- Integer
-         |     +-- Fraction
+         |     +-- FixedSizeCollection
+         |           +-- Array
+         |           +-- String
          |
-         +-- Date
-         +-- Time
+         +-- OrderedCollection
+         |     +-- SortedCollection
+         |
+         +-- Bag
+         +-- Set
+               +-- Dictionary
+
 ```
