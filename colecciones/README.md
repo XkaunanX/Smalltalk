@@ -69,3 +69,36 @@ Smalltalk ofrece una variedad de colecciones que permiten almacenar y manipular 
 ### size.st
 
 `size.st` es un método que devuelve el número de elementos en la colección.
+
+```plaintext
+Object
+   |
+   +-- UndefinedObject
+   |
+   +-- Collection
+   |     |
+   |     +-- IndexedCollection
+   |     |     |
+   |     |     +-- FixedSizeCollection
+   |     |           +-- Array
+   |     |           +-- String
+   |     |
+   |     +-- OrderedCollection
+   |     |     +-- SortedCollection
+   |     |
+   |     +-- Bag
+   |     +-- Set
+   |           +-- Dictionary
+   |
+   +-- Magnitude
+         |
+         +-- Character
+         +-- Number
+         |     |
+         |     +-- Float
+         |     +-- Integer
+         |     +-- Fraction
+         |
+         +-- Date
+         +-- Time
+```
