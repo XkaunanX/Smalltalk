@@ -175,15 +175,18 @@ Cada clase en Smalltalk, ya sea creada por el sistema o por el programador, here
 
 El árbol de herencia en Smalltalk refleja las relaciones jerárquicas entre las clases, donde `Object` ocupa la raíz. A medida que avanzamos en el árbol, las clases se especializan y amplían los comportamientos definidos en sus clases padre. Un ejemplo simple de un árbol de herencia sería:
 
-      Object
-         |  
-    ------------    
-    |          |  
-  Animal     Vehiculo  
-    |           |  
-----------   ----------  
-|        |   |        |  
-Mamifero Ave Coche   Barco
+```plaintext
+            Object
+              |  
+         --------------
+         |            |
+      Animal       Vehiculo
+         |            |
+     ---------    ---------
+     |       |    |       |
+  Mamifero   Ave  Coche   Barco
+```
+
 ### Explicación del Árbol de Herencia:
 
 1. **`Object`**: Es la raíz de todo, todas las clases heredan de `Object`.
