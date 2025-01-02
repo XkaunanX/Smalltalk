@@ -51,21 +51,33 @@ Transcript show: 'Valor de variable: ', variable printString; cr.
 # Jerarquia de tipos
 
 ```plaintext
-               Object
-                 |
-     ------------------------
-     |                      |
-   Number                Collection
-     |                      |
-   --------           ----------------
-   |      |           |              |
-Integer  Float     String           OrderedCollection
-   |                         |
-   -----                 --------------
-   |    |               |            |
-  SmallInteger  LargeInteger   Symbol   SequenceableCollection
-                                          |
-                                  ----------------------
-                                  |                    |
-                                Set               Dictionary
+Object
+   |
+   +-- Number
+   |     |
+   |     +-- Integer
+   |     |     |
+   |     |     +-- SmallInteger
+   |     |     |     |
+   |     |     |     +-- Double
+   |     |     |
+   |     |     +-- LargeInteger
+   |     |
+   |     +-- Float
+   |
+   +-- Collection
+   |     |
+   |     +-- String
+   |
+   +-- Boolean
+   |
+   +-- Char
+   |
+   +-- Date
+   |
+   +-- FileStream
+   |
+   +-- Time
+   |
+   +-- Symbol
 ```
