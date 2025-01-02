@@ -53,31 +53,22 @@ Transcript show: 'Valor de variable: ', variable printString; cr.
 ```plaintext
 Object
    |
-   +-- Number
+   +-- Magnitude
    |     |
-   |     +-- Integer
+   |     +-- Number
    |     |     |
-   |     |     +-- SmallInteger
+   |     |     +-- Float
+   |     |     +-- Integer
    |     |     |     |
-   |     |     |     +-- Double
+   |     |     |     +-- SmallInteger
+   |     |     |     +-- LargePositiveInteger
+   |     |     |     +-- LargeNegativeInteger
    |     |     |
-   |     |     +-- LargeInteger
+   |     |     +-- Fraction
    |     |
-   |     +-- Float
-   |
-   +-- Collection
-   |     |
-   |     +-- String
+   |     +-- Character
+   |     +-- Date
+   |     +-- Time
    |
    +-- Boolean
-   |
-   +-- Char
-   |
-   +-- Date
-   |
-   +-- FileStream
-   |
-   +-- Time
-   |
-   +-- Symbol
 ```
